@@ -1,0 +1,39 @@
+export module Application;
+
+import <iostream>;
+
+import Layer;
+
+export class App {
+public:
+
+    void setActiveLayer(Layer* layer)
+    {
+        m_layer = layer;
+    }
+
+    void run()
+    {
+        while(true)
+        {
+            // Input
+
+            // Update
+            if(m_layer)
+            {
+                m_layer->update();
+            }
+
+            // Render
+        }
+    }
+
+private:
+
+    
+    Layer* m_layer { nullptr };
+    
+
+};
+
+
