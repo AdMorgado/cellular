@@ -5,9 +5,15 @@ cxx.features.modules = true
 
 using cxx
 
+libs = 
+import libs += sfml-network%lib{sfml-network} 
+import libs += sfml-graphics%lib{sfml-graphics} 
+
+info "libs:" $libs
+
 assert $cxx.features.modules "no modules support for $cxx.signature"
 
-mxx{*}: extension = mpp
+mxx{*}: extension = ipp
 cxx{*}: extension = cpp
 
-exe{cellular}: {cxx mxx}{**}
+exe{cellular}: {cxx mxx}{**} $libs
