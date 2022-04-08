@@ -10,4 +10,4 @@ assert $cxx.features.modules "no modules support for $cxx.signature"
 mxx{*}: extension = mpp
 cxx{*}: extension = cpp
 
-exe{cellular}: {cxx mxx}{*}
+exe{cellular}: {cxx mxx}{**}
