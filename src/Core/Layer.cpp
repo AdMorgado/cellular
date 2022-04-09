@@ -1,4 +1,4 @@
-export module Layer;
+export module cell.core.layer;
 
 import <iostream>;
 
@@ -9,7 +9,7 @@ public:
 
     virtual void update() 
     {
-        
+        std::cout << "Hello world!\n";
     }
 
 private:

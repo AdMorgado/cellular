@@ -1,12 +1,25 @@
-export module Application;
+export module cell.core.application;
 
+import <vector>;
+import <thread>;
 import <iostream>;
+
 import <SFML/Graphics.hpp>;
 
-import Layer;
+import cell.core.layer;
+
 
 export class App {
 public:
+
+    App()
+    {
+        const auto numOfThreads = std::thread::hardware_concurrency();  
+    }
+    ~App()
+    {
+
+    }
 
     void setActiveLayer(Layer* layer)
     {
@@ -16,7 +29,8 @@ public:
 
     void run()
     {
-        m_window.create(sf::VideoMode(200, 200), "Cellular!");
+        m_layer->update();
+        m_window.create(sf::VideoMode(960, 640), "cellular");
 
         while(m_window.isOpen())
         {
@@ -44,11 +58,8 @@ public:
 private:
 
     sf::RenderWindow    m_window;
-
     
     Layer* m_layer { nullptr };
     
 
 };
-
-
