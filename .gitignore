@@ -1,7 +1,5 @@
 # Final executable name
-
-cellular
-build/
+cellula
 
 # Prerequisites
 *.d
@@ -36,9 +34,9 @@ build/
 *.out
 *.app
 
-# Build2 output files
-*.gcm
-*.lz4
+# gnu g++ compiler module output files
+gcm.cache/
+
 
 
 
