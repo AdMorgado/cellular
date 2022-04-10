@@ -1,11 +1,10 @@
-import cell.core.application;
 
+#include <thread>
+#include <vector>
+#include <iostream>
+#include <functional>
 
-import <thread>;
-import <vector>;
-import <iostream>;
-import <functional>;
-
+#include "Core/Application.cpp"
 
 int main() {
     App app;

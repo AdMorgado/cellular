@@ -1,15 +1,14 @@
-export module cell.core.application;
 
-import <vector>;
-import <thread>;
-import <iostream>;
+#include <vector>
+#include <thread>
+#include <iostream>
 
-import <SFML/Graphics.hpp>;
+#include <SFML/Graphics.hpp>
 
-import cell.core.layer;
+#include "Core/Layer.cpp"
 
 
-export class App {
+class App {
 public:
 
     App()
@@ -29,7 +28,6 @@ public:
 
     void run()
     {
-        m_layer->update();
         m_window.create(sf::VideoMode(960, 640), "cellular");
 
         while(m_window.isOpen())
