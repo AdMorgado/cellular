@@ -20,4 +20,7 @@ jobs:
       run: sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test && sudo apt-get install -y g++-11 
       
     - name: Build Cellular
-      run: ./compile_std.sh && make
+      env: 
+        CC:: gcc-11
+        CXX:: g++-11
+      run: cmake . && make
