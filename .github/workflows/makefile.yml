@@ -12,13 +12,17 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    
-    - name: Install SFML
-      run: sudo apt-get install -y libsfml-dev
-    
-    - name: Install g++-11
-      run: sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test && sudo apt-get install -y g++-11 
-      
+
+    - name: Install dependencies
+      run: |
+        sudo apt-get install python3 pip \
+        pip install cpplint \
+	sudo apt-get install -y libsfml-dev \
+        sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test && sudo apt-get install -y g++-11 
+
+    - name: Run Linter
+      run: cpplint --recursive ./src/
+
     - name: Build Cellular
       env: 
         CC: /usr/bin/gcc-11
