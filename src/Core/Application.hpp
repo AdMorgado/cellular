@@ -8,10 +8,10 @@
 
 #include "Core/Layer.hpp"
 
+#include "Threads/ThreadPool.hpp"
 
 class App {
 public:
-
     App();
     ~App();
 
@@ -20,8 +20,7 @@ public:
     void run();
 
 private:
-
     sf::RenderWindow    m_window;
-    
-    Layer* m_layer { nullptr };
+    Layer*              m_layer { nullptr };
+    ThreadPool          m_threadPool;
 };
