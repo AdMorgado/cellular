@@ -5,46 +5,34 @@
 #include <atomic>
 #include <iostream>
 
-#include "Threads/Job.h"
-
-std::vector<std::thread> threads;
-
-std::atomic_bool runThreads = false;
-
-void listenToJobs()
+ThreadPool::ThreadPool()
 {
-    runThreads = true;
-
-    while(runThreads)
-    {
-        Job* job = nullptr;
-        if(job)
-        {
-
-        }
-        else 
-        {
-            std::this_thread::yield();
-        }
-    }
+    
 }
 
-void startThreadPool(const int numOfThreads)
+ThreadPool::~ThreadPool()
 {
+
+}
+
+void ThreadPool::createThreads(const int numOfThreads)
+{
+    m_active = true;
     for(int i = 0; i < numOfThreads; i++)
     {
-        threads.push_back(std::thread(listenToJobs));
-        
+        std::thread thr([](){});
+        m_threads.push_back(std::move(thr));
     }
 }
 
 
-void stopThreadPool()
+void ThreadPool::stopThreads()
 {
-    runThreads = false;
-    for(std::thread& thr : threads)
-    {
+    m_active = false;
+    // TODO: empty thread pool
+    for(std::thread& thr : m_threads)
         thr.join();
-    }
+
+    m_threads.clear();
 }
 
