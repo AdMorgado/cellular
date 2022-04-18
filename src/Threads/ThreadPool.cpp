@@ -5,6 +5,9 @@
 #include <atomic>
 #include <iostream>
 
+#include "Threads/Job.hpp"
+
+
 ThreadPool::ThreadPool()
 {
     
@@ -15,12 +18,26 @@ ThreadPool::~ThreadPool()
 
 }
 
+void awaitForJobs()
+{
+    while(true)
+    {
+        Job* job = nullptr;
+        if(job)
+        {
+            
+        } else {
+            std::this_thread::yield();
+        }
+    }
+}
+
 void ThreadPool::createThreads(const int numOfThreads)
 {
     m_active = true;
     for(int i = 0; i < numOfThreads; i++)
     {
-        std::thread thr([](){});
+        std::thread thr(awaitForJobs);
         m_threads.push_back(std::move(thr));
     }
 }
@@ -34,5 +51,12 @@ void ThreadPool::stopThreads()
         thr.join();
 
     m_threads.clear();
+}
+
+void ThreadPool::synchronize()
+{
+
+
+
 }
 

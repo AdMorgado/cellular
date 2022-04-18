@@ -16,6 +16,8 @@ public:
     void createThreads(const int numOfThreads);
     void stopThreads();
 
+    void synchronize();
+
 private:
 
     std::vector<std::thread>    m_threads;
