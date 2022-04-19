@@ -4,7 +4,7 @@
 
 Entity Scene::addEntity()
 {
-    Entity entity;
+    Entity entity(m_registry.create(), this);
 
     return entity;
 }
