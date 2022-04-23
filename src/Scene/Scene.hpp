@@ -16,6 +16,7 @@ private:
 
     entt::registry  m_registry;
 
+    friend Entity;
 };
 
 
