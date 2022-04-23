@@ -2,17 +2,19 @@
 
 #include "Threads/ThreadPool.hpp"
 
+#include <chrono>
 #include <iostream>
+
 
 App::App()
 {
     const auto numOfThreads = std::thread::hardware_concurrency(); 
-    m_threadPool.createThreads(numOfThreads - 1);
+    m_threadPool.createThreads([](){std::this_thread::sleep_for(std::chrono::milliseconds(100));}, 2);
 }
 
 App::~App()
 {
-    m_threadPool.stopThreads();
+    m_threadPool.shutdown();
 }
 
 void App::setActiveLayer(Layer* layer)
@@ -24,16 +26,18 @@ void App::setActiveLayer(Layer* layer)
 void App::run()
 {
     m_window.create(sf::VideoMode(960, 640), "cellular");
+    m_window.setFramerateLimit(60);
 
+    bool isRunning = true;
     sf::Clock internalClock;
-    while(m_window.isOpen())
+    while(isRunning)
     {
         // Input
         sf::Event event;
         while (m_window.pollEvent(event))
         {
             if (event.type == sf::Event::Closed)
-                m_window.close();
+                isRunning = false;
         }
 
         // Update
@@ -48,4 +52,6 @@ void App::run()
 
         m_window.display();            
     }
+
+    m_window.close();
 }

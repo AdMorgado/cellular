@@ -2,6 +2,7 @@
 
 #include <thread>
 #include <vector>
+#include <atomic>
 #include <functional>
 
 class ThreadPool
@@ -13,16 +14,14 @@ public:
     
     bool isActive() const { return m_active; }
 
-    void createThreads(const int numOfThreads);
-    void stopThreads();
+    void createThreads(std::function<void()> func, const int numOfThreads);
 
-    void synchronize();
+    void shutdown();
 
 private:
 
     std::vector<std::thread>    m_threads;
-    std::function<void()>       m_func;
 
-    bool                        m_active { false };
+    std::atomic_bool            m_active { false };
 
 };

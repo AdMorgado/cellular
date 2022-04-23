@@ -18,45 +18,30 @@ ThreadPool::~ThreadPool()
 
 }
 
-void awaitForJobs()
-{
-    while(true)
-    {
-        Job* job = nullptr;
-        if(job)
-        {
-            
-        } else {
-            std::this_thread::yield();
-        }
-    }
-}
-
-void ThreadPool::createThreads(const int numOfThreads)
+void ThreadPool::createThreads(std::function<void()> func, const int numOfThreads)
 {
     m_active = true;
     for(int i = 0; i < numOfThreads; i++)
     {
-        std::thread thr(awaitForJobs);
+        auto threadFunc = [&isActive = m_active, func](){
+            while(isActive)
+            {
+                func();
+            }
+        };
+        std::thread thr(threadFunc);
         m_threads.push_back(std::move(thr));
     }
 }
 
 
-void ThreadPool::stopThreads()
+void ThreadPool::shutdown()
 {
     m_active = false;
-    // TODO: empty thread pool
     for(std::thread& thr : m_threads)
         thr.join();
 
     m_threads.clear();
 }
 
-void ThreadPool::synchronize()
-{
-
-
-
-}
 
