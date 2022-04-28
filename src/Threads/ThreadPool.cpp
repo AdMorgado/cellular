@@ -15,7 +15,7 @@ ThreadPool::ThreadPool()
 
 ThreadPool::~ThreadPool()
 {
-
+    destroyThreads();
 }
 
 void ThreadPool::createThreads(std::function<void()> func, const int numOfThreads)
@@ -36,6 +36,11 @@ void ThreadPool::createThreads(std::function<void()> func, const int numOfThread
 
 
 void ThreadPool::shutdown()
+{
+    destroyThreads();
+}
+
+void ThreadPool::destroyThreads()
 {
     m_active = false;
     for(std::thread& thr : m_threads)
