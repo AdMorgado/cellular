@@ -6,7 +6,7 @@
 Entity Scene::addEntity()
 {
     Entity entity(m_registry.create(), this);
-    entity.addComponent<Transform>();
+    //entity.addComponent<Transform>();
     return entity;
 }
 
