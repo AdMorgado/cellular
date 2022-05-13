@@ -35,7 +35,7 @@ public:
     }
 
     template <typename T>
-    bool removeCOmponent()
+    bool removeComponent()
     {
         return m_scene->m_registry.remove<T>(m_handle);
     }
