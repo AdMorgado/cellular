@@ -9,7 +9,7 @@
 App::App()
 {
     const auto numOfThreads = std::thread::hardware_concurrency(); 
-    m_threadPool.createThreads([](){std::this_thread::sleep_for(std::chrono::milliseconds(100));}, 2);
+    m_threadPool.createThreads( [](){std::this_thread::sleep_for(std::chrono::milliseconds(100));} , 2);
 }
 
 App::~App()
@@ -19,7 +19,10 @@ App::~App()
 
 void App::setActiveLayer(Layer* layer)
 {
+    if(!layer) return;
+    
     m_layer = layer;
+    m_layer->start();
 }
 
 
@@ -45,10 +48,10 @@ void App::run()
         {
             const float deltaTime = internalClock.restart().asSeconds();
             m_layer->update(deltaTime);
+
+            m_layer->render(m_window);
         }
 
-        // Render
-        m_window.clear();
 
         m_window.display();            
     }
