@@ -6,7 +6,7 @@ find_package(SFML REQUIRED COMPONENTS graphics system window)
 
 set(CMAKE_CXX_STANDARD_REQUIRED 20)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
-set(CMAKE_CXX_FLAGS "-Wall -pthread")
+set(CMAKE_CXX_FLAGS "-std=c++20 -Wall -pthread")
 
 set(SFML sfml-system sfml-window sfml-graphics)
 
@@ -28,3 +28,4 @@ target_link_libraries(${PROJECT_NAME} ${SFML})
 enable_testing()
 
 add_subdirectory(test)
+add_subdirectory(examples)
