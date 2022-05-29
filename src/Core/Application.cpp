@@ -43,12 +43,14 @@ void App::run()
                 isRunning = false;
         }
 
+        const float deltaTime = internalClock.restart().asSeconds();
+        
         // Update
-        if(m_layer)
-        {
-            const float deltaTime = internalClock.restart().asSeconds();
+        if(m_layer) {
             m_layer->update(deltaTime);
-
+        }
+        
+        if(m_layer) {
             m_layer->render(m_window);
         }
 
