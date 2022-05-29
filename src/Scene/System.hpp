@@ -18,13 +18,13 @@ public:
     }
     virtual ~System() {}
 
-    virtual void start() = 0;
-    virtual void update() = 0;
-    virtual void render(sf::RenderTarget& target) const = 0;
+    virtual void start() {};
+    virtual void update() {};
+    virtual void render(sf::RenderTarget& target) const {};
 
 protected:
 
-    Scene* m_scene;
+    Scene*      m_scene;
 
 };
 
