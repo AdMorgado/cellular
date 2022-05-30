@@ -8,6 +8,7 @@
 
 #include "Core/Layer.hpp"
 
+#include "Threads/JobQueue.hpp"
 #include "Threads/ThreadPool.hpp"
 
 class App {
@@ -20,7 +21,14 @@ public:
     void run();
 
 private:
-    sf::RenderWindow    m_window;
+
+    // Core
     Layer*              m_layer { nullptr };
+
+    // Rendering
+    sf::RenderWindow    m_window;
+
+    // Thread and Job System
     ThreadPool          m_threadPool;
+    JobQueue            m_jobQueue;
 };

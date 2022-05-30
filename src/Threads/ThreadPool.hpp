@@ -23,9 +23,5 @@ private:
     void destroyThreads();
 
     std::vector<std::thread>    m_threads;
-
     std::atomic_bool            m_active { false };
-
-
-
 };

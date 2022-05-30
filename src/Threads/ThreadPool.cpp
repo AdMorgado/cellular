@@ -43,6 +43,8 @@ void ThreadPool::shutdown()
 void ThreadPool::destroyThreads()
 {
     m_active = false;
+
+    //TODO: possibly check if threads are taking too long to shutdown
     for(std::thread& thr : m_threads)
         thr.join();
 

@@ -3,7 +3,8 @@
 
 struct Particle
 {
-    float radius {1.f};
+    sf::Vector2f velocity   {0.f, 0.f};
+    float radius            {1.f};
 };
 
 struct ParticleSystem : public System
@@ -18,7 +19,7 @@ struct ParticleRendererSystem : public System
 {
     virtual void render(sf::RenderTarget& target) const override
     {
-        m_scene->m_registry;
+
     }
 };
 
@@ -28,11 +29,12 @@ public:
     virtual void start() override
     {
 
+
     }
 
     virtual void update(const float dt) override
     {
-
+        
     }
 
     virtual void render(sf::RenderTarget& target) const override
@@ -41,9 +43,7 @@ public:
     }
 
 private:
-
     Scene m_scene;
-
 };
 
 Layer* getLayer() 
