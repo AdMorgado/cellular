@@ -14,10 +14,16 @@ public:
     void execute()
     {
         func();
+        hasExecuted = true;
+    }
+
+    void join() 
+    {
+        while(!hasExecuted);
     }
 
 private:
-
-    std::function<void()> func;
+    std::function<void()>   func;
+    std::atomic_bool        hasExecuted { false };
 };
 

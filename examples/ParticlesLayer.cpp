@@ -1,6 +1,8 @@
 
 #include <Cellular.hpp>
 
+#include <iostream>
+
 struct Particle
 {
     sf::Vector2f velocity   {0.f, 0.f};
@@ -31,10 +33,16 @@ public:
 
 
     }
-
-    virtual void update(const float dt) override
+    int i = 0;
+    virtual void update(std::function<void(Job*)> jobDispatcher, const float dt) override
     {
-        
+
+        Job job([&i = i](){
+            std::cout << "Ligma: " << i++ << std::endl;
+        });
+        jobDispatcher(&job);
+
+        job.join();
     }
 
     virtual void render(sf::RenderTarget& target) const override

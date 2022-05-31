@@ -19,7 +19,7 @@ public:
         m_cond.notify_one();
     }
 
-    Job* dequeue(std::chrono::nanoseconds timeout)
+    Job* dequeue(std::chrono::milliseconds timeout)
     {
         std::unique_lock<std::mutex> lock(m_mut);
 
@@ -31,7 +31,7 @@ public:
 
         while(true) 
         {  
-            auto status = m_cond.wait_for(lock, timeout);
+            std::cv_status status = m_cond.wait_for(lock, timeout);
 
             if(!m_queue.empty()) {
                 Job* job = m_queue.front();
