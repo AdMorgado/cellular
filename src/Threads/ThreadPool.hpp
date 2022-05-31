@@ -11,8 +11,6 @@ public:
 
     ThreadPool();
     ~ThreadPool();
-    
-    bool isActive() const { return m_active; }
 
     void createThreads(std::function<void()> func, const int numOfThreads);
 
