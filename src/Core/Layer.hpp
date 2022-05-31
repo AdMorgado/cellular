@@ -14,7 +14,7 @@ public:
     virtual ~Layer() = default;
 
     virtual void start() = 0;
-    virtual void update(std::function<void(Job*)> jobDispatcher, const float dt) = 0;
+    virtual void update(std::function<void(Job*)> dispatchJob, const float dt) = 0;
     virtual void render(sf::RenderTarget& target) const = 0;
 };
 

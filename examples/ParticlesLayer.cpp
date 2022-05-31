@@ -34,13 +34,13 @@ public:
 
     }
     int i = 0;
-    virtual void update(std::function<void(Job*)> jobDispatcher, const float dt) override
+    virtual void update(std::function<void(Job*)> dispatchJob, const float dt) override
     {
 
         Job job([&i = i](){
             std::cout << "Ligma: " << i++ << std::endl;
         });
-        jobDispatcher(&job);
+        dispatchJob(&job);
 
         job.join();
     }
