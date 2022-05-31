@@ -19,6 +19,7 @@ public:
 
     void join() 
     {
+        //TODO: switch this while with an await on the atomic variable
         while(!hasExecuted);
     }
 
