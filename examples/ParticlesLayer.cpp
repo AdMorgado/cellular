@@ -45,7 +45,7 @@ public:
         job.join();
     }
 
-    virtual void render(sf::RenderTarget& target) const override
+    virtual void render(sf::RenderTarget& target) override
     {
         m_scene.render(target);
     }

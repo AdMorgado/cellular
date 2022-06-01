@@ -1,6 +1,9 @@
 # Final executable name
 cellular
 
+particles
+cellular_tests
+
 # CMake
 CMakeLists.txt.user
 CMakeCache.txt
