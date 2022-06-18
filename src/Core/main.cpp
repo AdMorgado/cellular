@@ -7,7 +7,7 @@ extern Layer* getLayer();
 int main(int argc, char** argv)
 {
     App app;
-    
+
     Layer* layer = getLayer();
 
     app.setActiveLayer(layer);

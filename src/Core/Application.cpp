@@ -8,13 +8,13 @@
 
 App::App()
 {
-    const auto numOfThreads = std::thread::hardware_concurrency(); 
-    m_threadPool.createThreads([&jobQueue = m_jobQueue](){
+    const auto numOfThreads = std::thread::hardware_concurrency();
+    m_threadPool.createThreads([&jobQueue = m_jobQueue]() {
         using namespace std::chrono_literals;
         Job* job = jobQueue.dequeue(16ms);
         if(job)
             job->execute();
-        }, numOfThreads);
+    }, numOfThreads);
 }
 
 App::~App()
@@ -25,7 +25,7 @@ App::~App()
 void App::setActiveLayer(Layer* layer)
 {
     if(!layer) return;
-    
+
     m_layer = layer;
     m_layer->start();
 }
@@ -46,21 +46,21 @@ void App::run() {
         }
 
         const float deltaTime = internalClock.restart().asSeconds();
-        
+
         // Update
         if(m_layer) {
-            m_layer->update([&jobQueue = m_jobQueue](Job* job){
+            m_layer->update([&jobQueue = m_jobQueue](Job* job) {
                 jobQueue.enqueue(job);
             }, deltaTime);
         }
-        
+
         m_window.clear();
 
         if(m_layer) {
             m_layer->render(m_window);
         }
 
-        m_window.display();            
+        m_window.display();
     }
 
     m_window.close();
