@@ -33,10 +33,17 @@ public:
         {  
             std::cv_status status = m_cond.wait_for(lock, timeout);
 
-            if(!m_queue.empty()) {
-                Job* job = m_queue.front();
-                m_queue.pop();
-                return job;
+            switch(status) {
+                case std::cv_status::no_timeout:
+                    if(!m_queue.empty()) {
+                        Job* job = m_queue.front();
+                        m_queue.pop();
+                        return job;
+                    }
+                    break;
+                case std::cv_status::timeout:
+                    return nullptr;
+                    break;
             }
         }
     }
