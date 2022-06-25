@@ -9,12 +9,7 @@
 App::App()
 {
     const auto numOfThreads = std::thread::hardware_concurrency();
-    m_threadPool.createThreads([&jobQueue = m_jobQueue]() {
-        using namespace std::chrono_literals;
-        Job* job = jobQueue.dequeue(16ms);
-        if(job)
-            job->execute();
-    }, numOfThreads);
+    m_threadPool.createThreads(numOfThreads);
 }
 
 App::~App()
@@ -49,8 +44,8 @@ void App::run() {
 
         // Update
         if(m_layer) {
-            m_layer->update([&jobQueue = m_jobQueue](Job* job) {
-                jobQueue.enqueue(job);
+            m_layer->update([&pool = m_threadPool](Job* job) {
+                pool.execute(job);
             }, deltaTime);
         }
 

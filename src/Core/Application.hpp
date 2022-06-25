@@ -30,5 +30,4 @@ private:
 
     // Thread and Job System
     ThreadPool          m_threadPool;
-    JobQueue            m_jobQueue;
 };

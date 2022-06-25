@@ -5,6 +5,8 @@
 #include <atomic>
 #include <functional>
 
+#include "Threads/JobQueue.hpp"
+
 class ThreadPool
 {
 public:
@@ -12,14 +14,18 @@ public:
     ThreadPool();
     ~ThreadPool();
 
-    void createThreads(std::function<void()> func, const int numOfThreads);
+    void createThreads(int numOfThreads);
 
     void shutdown();
+
+    void execute(Job* job);
 
 private:
 
     void destroyThreads();
 
-    std::vector<std::thread>    m_threads;
+    JobQueue                    m_jobQueue;
+
+    std::vector<std::jthread>   m_threads;
     std::atomic_bool            m_active { false };
 };
