@@ -5,20 +5,18 @@
 
 class Job
 {
-public:
-    Job() = default;        
+public: 
     Job(std::function<void()> func) :
         func(func)
     { /* NOTHING */ }        
 
-    void execute()
-    {
+    void execute() {
         func();
         hasExecuted = true;
+        hasExecuted.notify_all();
     }
 
-    void join() 
-    {
+    void join() {
         if(hasExecuted) return;
         while(true) {
             hasExecuted.wait(false);
