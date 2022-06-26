@@ -1,19 +1,20 @@
 cmake_minimum_required(VERSION 3.8)
 
-set(NOME cellular_tests)
+set(TEST_NAME cellular_tests)
 
 #file(GLOB SOURCES 
 #    "*.cpp"
 #    )
 
-add_executable(${NOME} exampletest.cpp)
-target_link_libraries(${NOME} PUBLIC
+add_executable(${TEST_NAME} Threads/JobTest.cpp)
+target_include_directories(${TEST_NAME} PUBLIC "${PROJECT_SOURCE_DIR}/src")
+target_link_libraries(${TEST_NAME} PUBLIC
     gtest
     gtest_main
     cellular
 )
 
 add_test(
-    NAME ${NOME} 
-    COMMAND ${NOME}
+    NAME ${TEST_NAME} 
+    COMMAND ${TEST_NAME}
     )
