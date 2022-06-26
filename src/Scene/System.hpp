@@ -10,22 +10,12 @@ class Scene;
 class System
 {
 public:
-
-    System(Scene* scene) : 
-        m_scene(scene)
-    {
-
-    }
+    System() { }
     virtual ~System() {}
 
-    virtual void start() {};
-    virtual void update() {};
-    virtual void render(sf::RenderTarget& target) const {};
-
-protected:
-
-    Scene*      m_scene;
-
+    virtual void start(Scene& scene) { }
+    virtual void update(Scene& scene) { }
+    virtual void render(const Scene& scene, sf::RenderTarget& target) const { }
 };
 
 template <typename T>
