@@ -3,9 +3,14 @@
 
 #include "Cellular.hpp"
 
-TEST(JobTest, ValidUse)
-{
+TEST(JobTest, ValidUse) {
     Job job([](){});
-    job.execute();
+    ASSERT_NO_THROW(job.execute());
     job.join();
+}
+
+TEST(JobTest, InvalidUse) {
+    Job job([](){});
+    ASSERT_NO_THROW(job.execute());
+    ASSERT_THROW(job.execute(), std::runtime_error);
 }
