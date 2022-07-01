@@ -11,6 +11,6 @@ float random(float min, float max)
 {
     const float interval = max - min;
 
-    return min + (random01() / interval);
+    return min + (random01() * interval);
 }
 
