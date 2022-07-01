@@ -6,14 +6,18 @@ extern Layer* getLayer();
 
 int main(int argc, char** argv)
 {
-    App app;
+    try {
+        App app;
 
-    Layer* layer = getLayer();
+        Layer* layer = getLayer();
 
-    app.setActiveLayer(layer);
-    app.run();
-
-    delete layer;
-
+        app.setActiveLayer(layer);
+        app.run();
+        delete layer;
+    } 
+    catch(std::exception exc) {
+        std::cerr << "An unhandled exception has been caught.\n" << exc.what() << std::endl;
+    } 
+ 
     return 0;
 }
