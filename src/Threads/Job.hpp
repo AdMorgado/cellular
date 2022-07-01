@@ -1,6 +1,7 @@
 #pragma once
 
 #include <atomic>
+#include <exception>
 #include <functional>
 
 class Job
@@ -11,22 +12,32 @@ public:
     { /* NOTHING */ }        
 
     void execute() {
-        func();
-        hasExecuted = true;
-        hasExecuted.notify_all();
+        State expected = State::AVAILABLE;
+        if(hasExecuted.compare_exchange_strong(expected, State::EXECUTING)) {
+            func();
+            hasExecuted = State::FINISHED;
+            hasExecuted.notify_all();
+        } else {
+            throw std::runtime_error("This job has already been handled");
+        }
     }
 
     void join() {
-        if(hasExecuted) return;
+        if(hasExecuted == State::FINISHED) return;
+        
         while(true) {
-            hasExecuted.wait(false);
+            hasExecuted.wait(State::FINISHED);
 
-            if(hasExecuted) return;
+            if(hasExecuted == State::FINISHED) return;
         }
     }
 
 private:
+    enum State : uint8_t {
+        AVAILABLE, EXECUTING, FINISHED
+    };
+
     std::function<void()>   func;
-    std::atomic_bool        hasExecuted { false };
+    std::atomic<State>      hasExecuted { State::AVAILABLE };
 };
 
