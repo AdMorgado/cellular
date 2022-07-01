@@ -5,6 +5,8 @@
 
 #include <SFML/Graphics/RenderTarget.hpp>
 
+#include <entt/entt.hpp>
+
 class Scene;
 
 class System
@@ -16,6 +18,11 @@ public:
     virtual void start(Scene& scene) { }
     virtual void update(Scene& scene) { }
     virtual void render(const Scene& scene, sf::RenderTarget& target) const { }
+
+protected:
+    entt::registry& getRegistry(Scene& scene) {
+        return scene.m_registry;
+    }
 };
 
 template <typename T>

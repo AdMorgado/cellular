@@ -18,7 +18,7 @@ public:
     Entity addEntity();
 
 private:
-    entt::registry          m_registry;
+    entt::registry m_registry;
 
     friend System;
     friend Entity;
