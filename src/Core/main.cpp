@@ -15,7 +15,7 @@ int main(int argc, char** argv)
         app.run();
         delete layer;
     } 
-    catch(std::exception exc) {
+    catch(const std::exception& exc) {
         std::cerr << "An unhandled exception has been caught.\n" << exc.what() << std::endl;
     } 
  
