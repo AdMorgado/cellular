@@ -8,6 +8,10 @@
 
 #include "Threads/Job.hpp"
 
+/**
+ * @brief This instance is thread-safe.
+ * 
+ */
 class JobQueue 
 {
 public:

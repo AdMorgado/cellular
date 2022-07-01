@@ -24,13 +24,17 @@ void ThreadPool::createThreads(int numOfThreads) {
                 using namespace std::chrono_literals;
                 Job* job = jobQueue.dequeue(10ms);
                 if(job) {
-                    job->execute(); 
+                    try {
+                        job->execute();
+                    } 
+                    catch(const std::exception& exc) {
+                        std::cerr << "A job has produced an error: " << exc.what() << std::endl;
+                    } 
                 }
                 if(stoken.stop_requested()) break;
             }
         };
-        std::jthread thr(threadFunc);
-        m_threads.push_back(std::move(thr));
+        m_threads.push_back(std::jthread(threadFunc));
     }
 }
 
@@ -46,11 +50,12 @@ void ThreadPool::execute(Job* job) {
 void ThreadPool::destroyThreads() {
     m_active = false;
 
-    //TODO: possibly check if threads are taking too long to shutdown
-    for(std::jthread& thr : m_threads){
+    for(std::jthread& thr : m_threads) 
         thr.request_stop();
+
+    //TODO: possibly check if threads are taking too long to shutdown
+    for(std::jthread& thr : m_threads) 
         thr.join();
-    }
 
     m_threads.clear();
 }
