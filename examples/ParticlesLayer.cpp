@@ -1,61 +1,50 @@
 
 #include <Cellular.hpp>
 
-#include <iostream>
-
-struct Particle
-{
+struct Particle {
     sf::Vector2f velocity   {0.f, 0.f};
     float radius            {1.f};
 };
 
-struct ParticleSystem : public System
-{
-    virtual void update() override
-    {
+struct ParticleSystem : public System {
+    virtual void update(Scene& scene) override {
 
     }
 };
 
-struct ParticleRendererSystem : public System
-{
-    virtual void render(sf::RenderTarget& target) const override
-    {
+struct ParticleRendererSystem : public System {
+    virtual void render(const Scene& scene, sf::RenderTarget& target) const override {
 
     }
 };
 
-class ParticlesLayer : public Layer 
-{
+class ParticlesLayer : public Layer {
 public:
-    virtual void start() override
-    {
-
-
+    virtual void start() override {
+        systems.push_back(new ParticleSystem());
     }
-    int i = 0;
-    virtual void update(std::function<void(Job*)> dispatchJob, const float dt) override
-    {
 
-        Job job([&i = i](){
-            std::cout << "Ligma: " << i++ << std::endl;
+    virtual void update(std::function<void(Job*)> dispatchJob, const float dt) override {
+        Job job([&systems = systems, &scene = scene](){
+            for(System* system : systems) {
+                system->update(scene);
+            }
         });
         dispatchJob(&job);
-
         job.join();
     }
 
-    virtual void render(sf::RenderTarget& target) override
-    {
-        m_scene.render(target);
+    virtual void render(sf::RenderTarget& target) override {
+        renderer.render(scene, target);
     }
 
 private:
-    Scene m_scene;
+    Scene scene;
+    std::vector<System*> systems;
+    ParticleRendererSystem renderer;
 };
 
-Layer* getLayer() 
-{
+Layer* getLayer() {
     return new ParticlesLayer();
 }
 
