@@ -53,10 +53,6 @@ void ThreadPool::destroyThreads() {
     for(std::jthread& thr : m_threads) 
         thr.request_stop();
 
-    //TODO: possibly check if threads are taking too long to shutdown
-    for(std::jthread& thr : m_threads) 
-        thr.join();
-
     m_threads.clear();
 }
 
