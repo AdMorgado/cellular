@@ -1,7 +1,5 @@
 #pragma once
 
-#include <functional>
-
 #include "Core/Layer.hpp"
 
 #include "Scene/Scene.hpp"
