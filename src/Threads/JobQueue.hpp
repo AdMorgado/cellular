@@ -18,7 +18,9 @@ public:
 
     void enqueue(Job* job);
     Job* dequeue(std::chrono::milliseconds timeout);
-    
+
+    std::size_t getSize();
+
 private:   
 
     std::mutex              m_mut;

@@ -34,3 +34,8 @@ Job* JobQueue::dequeue(std::chrono::milliseconds timeout) {
         }
     }
 }
+
+std::size_t JobQueue::getSize() {
+    std::lock_guard<std::mutex> lock(m_mut);
+    return m_queue.size();
+}
