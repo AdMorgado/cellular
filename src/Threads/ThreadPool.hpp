@@ -31,5 +31,5 @@ private:
     std::mutex                  m_mut;
     std::vector<std::jthread>   m_threads;
     std::atomic_uint32_t const  maxNumOfThreads; //investigate if maxNumOfThreads needs to be atomic, as it is immutable
-    std::atomic_bool            m_active { false };
+    std::atomic_bool            m_active { true };
 };
