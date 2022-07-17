@@ -11,21 +11,25 @@ class ThreadPool
 {
 public:
 
-    ThreadPool();
+    ThreadPool(uint32_t maxNumOfThreads);
     ~ThreadPool();
 
-    void createThreads(int numOfThreads);
-
-    void shutdown();
-
     void execute(Job* job);
+    
+    void shutdown();
 
 private:
 
+    std::size_t getNumOfThreads() const;
+
     void destroyThreads();
+    void createThread();
+
+    void unregister(std::thread::id id);
 
     JobQueue                    m_jobQueue;
-
+    std::mutex                  m_mut;
     std::vector<std::jthread>   m_threads;
+    std::atomic_uint32_t const  maxNumOfThreads; //investigate if maxNumOfThreads needs to be atomic, as it is immutable
     std::atomic_bool            m_active { false };
 };
