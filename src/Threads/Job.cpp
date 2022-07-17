@@ -1,5 +1,7 @@
 #include "Threads/Job.hpp"
 
+#include <iostream>
+
 Job::Job(std::function<void()> func) :
         func(func)
 { /* NOTHING */ }        
@@ -18,7 +20,8 @@ void Job::execute() {
 void Job::join() {
     if(hasExecuted == State::FINISHED) return;
     while(true) {
-        hasExecuted.wait(State::FINISHED);
+        // TODO: wait isnt set on an old value, but rather a desired value, this might be problematic
+        hasExecuted.wait(State::EXECUTING); 
 
         if(hasExecuted == State::FINISHED) return;
     }
