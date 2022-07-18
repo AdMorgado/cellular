@@ -9,6 +9,5 @@ set(SFML sfml-system sfml-window sfml-graphics)
 set(EXAMPLE_NAME particles)
 
 add_executable(${EXAMPLE_NAME} ParticlesLayer.cpp)
-target_include_directories(${EXAMPLE_NAME} PUBLIC "${PROJECT_SOURCE_DIR}/src")
 target_link_libraries(${EXAMPLE_NAME} PUBLIC ${PROJECT_NAME})
 

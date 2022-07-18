@@ -7,7 +7,6 @@ file(GLOB SOURCES
     )
 
 add_executable(${TEST_NAME} ${SOURCES})
-target_include_directories(${TEST_NAME} PUBLIC "${PROJECT_SOURCE_DIR}/src")
 target_link_libraries(${TEST_NAME} PUBLIC
     gtest
     gtest_main
