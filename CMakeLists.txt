@@ -14,10 +14,17 @@ file(GLOB SOURCES
     "src/Scene/*.cpp"
     "src/Utils/*.cpp"
     "src/Threads/*.cpp"
-    "src/*.cpp" )
+    "src/*.cpp" 
+)
+
+
 
 add_library(${PROJECT_NAME} STATIC ${SOURCES})
-target_include_directories(${PROJECT_NAME} PRIVATE "src")
+target_include_directories(${PROJECT_NAME} PUBLIC 
+    "src" 
+    "vendor/entt/include"
+)
+
 target_link_libraries(${PROJECT_NAME} ${SFML})
 
 enable_testing()
