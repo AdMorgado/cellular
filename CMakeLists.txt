@@ -15,17 +15,18 @@ file(GLOB SOURCES
     "src/Scene/*.cpp"
     "src/Utils/*.cpp"
     "src/Threads/*.cpp"
-    "src/*.cpp" 
+    "src/*.cpp"  
+)
 
+file(GLOB IMGUI_SOURCES
     "vendor/imgui/imgui.cpp"
     "vendor/imgui/imgui_draw.cpp"
     "vendor/imgui/imgui_tables.cpp"
     "vendor/imgui/imgui_widgets.cpp"
-
     "vendor/imgui-sfml/imgui-SFML.cpp"
-)
+) 
 
-add_library(${PROJECT_NAME} STATIC ${SOURCES})
+add_library(${PROJECT_NAME} STATIC ${SOURCES} ${IMGUI_SOURCES})
 target_include_directories(${PROJECT_NAME} PUBLIC 
     "src" 
     "vendor/entt/include"
@@ -36,7 +37,7 @@ target_include_directories(${PROJECT_NAME} PUBLIC
 target_link_libraries(${PROJECT_NAME} 
     ${SFML}
     ${OPENGL_LIBRARIES}
-    )
+)
 
 
 enable_testing()
