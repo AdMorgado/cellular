@@ -9,7 +9,7 @@ class Job
 public: 
     Job(std::function<void()> func);
 
-    void execute();
+    bool execute();
     
     void join();
 
