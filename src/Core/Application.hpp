@@ -22,12 +22,16 @@ public:
 
 private:
 
+    void handleEvents();
+    void update(sf::Time dt);
+    void render();
+
+private:
+
     // Core
     Layer*              m_layer { nullptr };
 
-    // Rendering
     sf::RenderWindow    m_window;
-
-    // Thread and Job System
+    
     ThreadPool          m_threadPool;
 };
