@@ -38,7 +38,7 @@ std::size_t ThreadPool::getNumOfThreads() const {
  * Must be called in possession of [m_mut]
  */
 void ThreadPool::createThread() {
-    auto threadFunc = [pool = this, &isActive = m_active, &jobQueue = m_jobQueue](std::stop_token stoken) {
+    auto threadFunc = [pool = this, &isActive = m_active, &jobQueue = m_jobQueue]() {
         log("Thread awaking");
         while(isActive) {
             Job* job = jobQueue.dequeue(THREAD_LIFETIME);
@@ -49,25 +49,28 @@ void ThreadPool::createThread() {
                 catch(const std::exception& exc) {
                     log("A job has thrown an exception.");
                 } 
-            }
-            if(stoken.stop_requested()) {
-                log("Thread has been request to stop");
+            } else {
                 break;
-            } 
+            }
         }
         log("Thread is stopping");
         pool->unregister(std::this_thread::get_id());
     };
     
-    m_threads.push_back(std::jthread(threadFunc));
+    m_threads.push_back(std::thread(threadFunc));
 }
 
 void ThreadPool::unregister(std::thread::id id) {
     std::lock_guard<std::mutex> guard(m_mut);
 
-    std::remove_if(m_threads.begin(), m_threads.end(), [id = id](std::jthread& thr)
-        { return id == thr.get_id(); }
-    );
+    //log("removing" + std::to_string(m_threads.size()));
+    //m_threads.erase(std::remove_if(m_threads.begin(), m_threads.end(), [id = id](std::thread& thr)
+    //    { return id == thr.get_id(); }
+    //));
+    auto it = std::find_if(m_threads.begin(), m_threads.end(), [id = id](std::thread& thr)
+        { return id == thr.get_id(); });
+    it->detach();
+    m_threads.erase(it);
 }
 
 
