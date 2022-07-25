@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <thread>
+#include <memory>
 #include <iostream>
 
 #include <SFML/Graphics.hpp>
@@ -13,10 +14,8 @@
 
 class App {
 public:
-    App();
+    App(std::unique_ptr<Layer> layer);
     ~App();
-
-    void setActiveLayer(Layer* layer);
 
     void run();
 
@@ -29,9 +28,7 @@ private:
 private:
 
     // Core
-    Layer*              m_layer { nullptr };
-
-    sf::RenderWindow    m_window;
-    
-    ThreadPool          m_threadPool;
+    std::unique_ptr<Layer>  m_layer;
+    sf::RenderWindow        m_window;
+    ThreadPool              m_threadPool;
 };

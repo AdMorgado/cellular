@@ -7,13 +7,8 @@ extern Layer* getLayer();
 int main(int argc, char** argv)
 {
     try {
-        App app;
-
-        Layer* layer = getLayer();
-
-        app.setActiveLayer(layer);
+        App app {std::unique_ptr<Layer>(getLayer()) };
         app.run();
-        delete layer;
     } 
     catch(const std::exception& exc) {
         std::cerr << "An unhandled exception has been caught.\n" << exc.what() << std::endl;

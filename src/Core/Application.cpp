@@ -8,20 +8,16 @@
 #include "imgui.h"
 #include "imgui-SFML.h"
 
-App::App() : 
+App::App(std::unique_ptr<Layer> layer) : 
+    m_layer(std::move(layer)),
     m_threadPool(std::thread::hardware_concurrency()) {
+    
 }
 
 App::~App() {
     m_threadPool.shutdown();
 }
 
-void App::setActiveLayer(Layer* layer) {
-    if(!layer) return;
-
-    m_layer = layer;
-    m_layer->start();
-}
 
 
 void App::run() {
