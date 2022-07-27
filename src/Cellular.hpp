@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Core/Layer.hpp"
+#include "Core/Resource.hpp"
 
 #include "Scene/Scene.hpp"
 #include "Scene/System.hpp"

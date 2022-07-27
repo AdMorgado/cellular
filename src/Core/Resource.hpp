@@ -5,8 +5,16 @@
 
 #include <string>
 
+#define RESOURCE_PATH_TEXTURE "textures/"
+#define RESOURCE_PATH_FONTS "fonts/"
+
 namespace Resource {
 
+    /**
+     * @brief Loads resources textures and fonts.
+     * Ideally called at the start of the program once. 
+     * This function is thread-safe.
+     */
     void loadResources();
 
     const sf::Texture&    getTexture(const std::string& fileName);

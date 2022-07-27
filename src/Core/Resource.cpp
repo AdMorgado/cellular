@@ -2,6 +2,7 @@
 
 #include <mutex>
 #include <string>
+#include <iostream>
 #include <filesystem>
 #include <unordered_map>
 
@@ -11,14 +12,52 @@ namespace Resource {
     std::mutex guard;
 
     //shared mutable state protected by [guard]
-    std::unordered_map<std::string, sf::Texture> textures;
-    std::unordered_map<std::string, sf::Font> fonts;
+    std::unordered_map<std::string, const sf::Texture> textures;
+    std::unordered_map<std::string, const sf::Font> fonts;
 
-    void loadResources() {
+    namespace fs = std::filesystem;
+
+    void loadTextures() {
         std::lock_guard<std::mutex> lock(guard);
-        
+
+        for(const auto& entry : fs::recursive_directory_iterator(RESOURCE_PATH_TEXTURE)) { 
+            const fs::path path = entry.path();          
+            
+            if(!entry.is_regular_file())    continue;
+            if(path.extension() != ".png")  continue;
+            
+            std::cout << path << std::endl;
+
+            sf::Texture tex;
+            if(tex.loadFromFile(path)) {
+                textures.insert({path, tex});
+            }
+        }
     }
 
+    void loadFonts() {
+        std::lock_guard<std::mutex> lock(guard);
+
+        for(const auto& entry : fs::recursive_directory_iterator(RESOURCE_PATH_FONTS)) { 
+            const fs::path path = entry.path();          
+            
+            if(!entry.is_regular_file())    continue;
+            if(path.extension() != ".ttf")  continue;
+            
+            std::cout << path << std::endl;
+
+            sf::Font font;
+            if(font.loadFromFile(path)) {
+                fonts.insert({path, font});
+            }
+        }
+    }
+
+    void loadResources() {
+        loadTextures();
+        loadFonts();
+    }
+    
     const sf::Texture& getTexture(const std::string& fileName) {
         std::lock_guard<std::mutex> lock(guard);
 
