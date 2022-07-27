@@ -11,7 +11,7 @@
 #define THREADPOOL_EXC_SHUTDOWN "Thread Pool has already shutdown!"
 
 using namespace std::chrono_literals;
-constexpr auto THREAD_LIFETIME = 10ms;
+constexpr auto THREAD_LIFETIME = 100ms;
 
 
 void log(const std::string& msg) {

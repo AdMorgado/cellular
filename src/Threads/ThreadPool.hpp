@@ -20,9 +20,13 @@ public:
 
 private:
 
+    enum State : uint8_t {
+        AVAILABLE,
+        SHUTDOWN
+    };
+
     std::size_t getNumOfThreads() const;
 
-    void destroyThreads();
     void createThread();
 
     void unregister(std::thread::id id);
