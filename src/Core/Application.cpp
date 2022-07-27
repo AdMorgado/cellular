@@ -8,23 +8,26 @@
 #include "imgui.h"
 #include "imgui-SFML.h"
 
+#include "Core/Resource.hpp"
+
 App::App(std::unique_ptr<Layer> layer) : 
     m_layer(std::move(layer)),
     m_threadPool(std::thread::hardware_concurrency()) {
-    
+
+    Resource::loadResources();
+
+    m_layer->start();
 }
 
 App::~App() {
     m_threadPool.shutdown();
 }
 
-
-
 void App::run() {
     m_window.create(sf::VideoMode(960, 640), "cellular");
     m_window.setFramerateLimit(60);
 
-    ImGui::SFML::Init(m_window);
+    if(ImGui::SFML::Init(m_window)) throw std::runtime_error("ImGui::SFML::Init() has failed");
 
     sf::Clock internalClock;
     while(m_window.isOpen()) {
@@ -43,54 +46,15 @@ void App::handleEvents() {
     sf::Event event;
     while (m_window.pollEvent(event)) {
         ImGui::SFML::ProcessEvent(m_window, event);
-
+        if(m_layer) m_layer->handleEvent(event);
         switch(event.type) {
             case sf::Event::Closed:
                 m_window.close();
                 break;
             case sf::Event::Resized:
+                m_window.setView(sf::View(sf::FloatRect(0.f, 0.f, event.size.width, event.size.height)));
                 break;
-            case sf::Event::LostFocus:
-                break;
-            case sf::Event::GainedFocus:
-                break;
-            case sf::Event::TextEntered:
-                break;
-            case sf::Event::KeyPressed:
-                break;
-            case sf::Event::KeyReleased:
-                break;
-            case sf::Event::MouseWheelMoved:
-                break;
-            case sf::Event::MouseWheelScrolled:
-                break;
-            case sf::Event::MouseButtonPressed:
-                break;
-            case sf::Event::MouseButtonReleased:
-                break;
-            case sf::Event::MouseMoved:
-                break;
-            case sf::Event::MouseEntered:
-                break;
-            case sf::Event::MouseLeft:
-                break;
-            case sf::Event::JoystickButtonPressed:
-                break;
-            case sf::Event::JoystickButtonReleased:
-                break;
-            case sf::Event::JoystickMoved:
-                break;
-            case sf::Event::JoystickConnected:
-                break;
-            case sf::Event::JoystickDisconnected:
-                break;
-            case sf::Event::TouchBegan:
-                break;
-            case sf::Event::TouchMoved:
-                break;
-            case sf::Event::TouchEnded:
-                break;
-            case sf::Event::SensorChanged:
+            default:
                 break;
         }
     }
