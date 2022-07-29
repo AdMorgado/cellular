@@ -27,8 +27,12 @@ void App::run() {
     m_window.create(sf::VideoMode(960, 640), "cellular");
     m_window.setFramerateLimit(60);
 
+
     if(!ImGui::SFML::Init(m_window)) 
         throw std::runtime_error("ImGui::SFML::Init() has failed");
+
+    // stop creating the ini file
+    ImGui::GetIO().IniFilename = NULL;
 
     sf::Clock internalClock;
     while(m_window.isOpen()) {
