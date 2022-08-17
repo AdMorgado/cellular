@@ -8,6 +8,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED 20)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 set(CMAKE_CXX_FLAGS "-std=c++20 -Wall -pthread")
 
+option(BUILD_EXAMPLES "Build examples" OFF)
+option(BUILD_TESTS "Build unit tests" OFF)
+
 set(SFML sfml-system sfml-window sfml-graphics)
 
 file(GLOB SOURCES 
@@ -39,8 +42,11 @@ target_link_libraries(${PROJECT_NAME}
     ${OPENGL_LIBRARIES}
 )
 
+if(BUILD_TESTS)
+    enable_testing()
+    add_subdirectory(test)
+endif()
 
-enable_testing()
-
-add_subdirectory(test)
-add_subdirectory(examples)
+if(BUILD_EXAMPLES)
+    add_subdirectory(examples)
+endif()
