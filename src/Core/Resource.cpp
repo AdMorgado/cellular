@@ -20,6 +20,10 @@ namespace Resource {
     void loadTextures() {
         std::lock_guard<std::mutex> lock(guard);
 
+        if(!fs::exists(fs::path(RESOURCE_PATH_TEXTURE))) {
+            std::cout << RESOURCE_PATH_TEXTURE << " folder does not exist, no loading textures!" << std::endl;
+            return;
+        }
         for(const auto& entry : fs::recursive_directory_iterator(RESOURCE_PATH_TEXTURE)) { 
             const fs::path path = entry.path();          
             
@@ -37,6 +41,11 @@ namespace Resource {
 
     void loadFonts() {
         std::lock_guard<std::mutex> lock(guard);
+
+        if(!fs::exists(fs::path(RESOURCE_PATH_FONTS))) {
+            std::cout << RESOURCE_PATH_FONTS << " folder does not exist, no loading fonts!" << std::endl;
+            return;
+        }
 
         for(const auto& entry : fs::recursive_directory_iterator(RESOURCE_PATH_FONTS)) { 
             const fs::path path = entry.path();          
