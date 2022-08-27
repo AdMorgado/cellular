@@ -7,7 +7,7 @@ Job::Job(std::function<void()> func) :
 { /* NOTHING */ }        
 
 bool Job::execute() {
-    State expected = State::NEW;
+    State expected = State::AVAILABLE;
     if(hasExecuted.compare_exchange_strong(expected, State::EXECUTING)) {
         func();
         hasExecuted = State::FINISHED;

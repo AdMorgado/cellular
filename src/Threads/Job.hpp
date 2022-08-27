@@ -15,10 +15,10 @@ public:
 
 private:
     enum State : uint8_t {
-        NEW, EXECUTING, FINISHED
+        AVAILABLE, EXECUTING, FINISHED
     };
 
     std::function<void()>   func;
-    std::atomic<State>      hasExecuted { State::NEW };
+    std::atomic<State>      hasExecuted { State::AVAILABLE };
 };
 
