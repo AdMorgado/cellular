@@ -4,6 +4,7 @@ set(TEST_NAME cellular_tests)
 
 file(GLOB SOURCES 
     "Threads/*.cpp"
+    "Utils/*.cpp"
     )
 
 add_executable(${TEST_NAME} ${SOURCES})
