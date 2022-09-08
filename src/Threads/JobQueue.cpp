@@ -29,16 +29,8 @@ Job* JobQueue::dequeue(std::chrono::milliseconds timeout) {
     while(true) 
     {  
         std::cv_status status = cond.wait_for(lock, timeout);
-
-        switch(status) {
-            case std::cv_status::no_timeout:
-                if(req.job) return req.job;
-                
-                break;
-            case std::cv_status::timeout:
-                return nullptr;
-                break;
-        }
+        if(req.job) return req.job;
+        if(status == std::cv_status::timeout) return nullptr;
     }
 }
 
