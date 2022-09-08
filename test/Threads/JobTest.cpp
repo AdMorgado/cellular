@@ -11,13 +11,7 @@ TEST(JobTest, ValidUse) {
     job.join();
 }
 
-TEST(JobTest, InvalidUse) {
-    Job job([](){});
-    ASSERT_NO_THROW(job.execute());
-    ASSERT_THROW(job.execute(), std::runtime_error);
-}
-
-constexpr int NUM_OF_REPS = 10000;
+constexpr int NUM_OF_REPS = 100'000;
 
 TEST(JobTest, ExhaustiveTest) {
     for(int i = 0; i < NUM_OF_REPS; i++) {
