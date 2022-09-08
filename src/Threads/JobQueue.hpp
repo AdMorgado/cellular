@@ -9,7 +9,8 @@
 #include "Threads/Job.hpp"
 
 /**
- * @brief This instance is thread-safe.
+ * @brief This instance is thread-safe. Jobs are queued and dequeued by consuming threads
+ * Consuming threads will also respect a FIFO order
  * 
  */
 class JobQueue 
@@ -23,9 +24,17 @@ public:
 
 private:   
 
+    struct Request {
+        Request(std::condition_variable& cond) :
+            cond(cond) 
+        { }
+        std::condition_variable&    cond;
+        Job*                        job { nullptr };
+    };
+
     std::mutex              m_mut;
-    std::condition_variable m_cond;
     std::queue<Job*>        m_queue;
+    std::queue<Request*>    m_requests;
 };
 
 
