@@ -13,10 +13,6 @@
 App::App(std::unique_ptr<Layer> layer) : 
     m_layer(std::move(layer)),
     m_threadPool(std::thread::hardware_concurrency()) {
-
-    Resource::loadResources();
-
-    m_layer->start();
 }
 
 App::~App() {
@@ -24,27 +20,34 @@ App::~App() {
 }
 
 void App::run() {
-    m_window.create(sf::VideoMode(960, 640), "cellular");
-    m_window.setFramerateLimit(60);
+    if(!initialize()) throw std::runtime_error("Application initialization has failed!");
 
+    m_window.create(sf::VideoMode(960, 640), "cellular");
 
     if(!ImGui::SFML::Init(m_window)) 
         throw std::runtime_error("ImGui::SFML::Init() has failed");
 
-    // stop creating the ini file
-    ImGui::GetIO().IniFilename = NULL;
-
-    sf::Clock internalClock;
-    while(m_window.isOpen()) {
-        // Input
-        handleEvents();
-
-        update(internalClock.restart());
-
-        render();
-    }
+    m_layer->start();
+    
+    mainLoop();
 
     ImGui::SFML::Shutdown();
+}
+
+bool App::initialize() {
+    // Avoid creating imgui.ini file
+    ImGui::GetIO().IniFilename = NULL;
+
+    Resource::loadResources();
+}
+
+void App::mainLoop() {
+    sf::Clock internalClock;
+    while(m_window.isOpen()) {
+        handleEvents();
+        update(internalClock.restart());
+        render();
+    }
 }
 
 void App::handleEvents() {

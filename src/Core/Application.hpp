@@ -21,6 +21,10 @@ public:
 
 private:
 
+    bool initialize();
+
+    void mainLoop();
+
     void handleEvents();
     void update(sf::Time dt);
     void render();
