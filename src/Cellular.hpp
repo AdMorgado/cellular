@@ -10,7 +10,7 @@
 
 #include "Threads/Job.hpp"
 
-#include "Utils/Math.h"
-#include "Utils/Random.h"
+#include "Utils/Math.hpp"
+#include "Utils/Random.hpp"
 
 #include "imgui.h"
