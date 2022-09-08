@@ -29,6 +29,7 @@ Job* JobQueue::dequeue(std::chrono::milliseconds timeout) {
     while(true) 
     {  
         std::cv_status status = cond.wait_for(lock, timeout);
+        // by checking first priority is given to returning req.job over timeout
         if(req.job) return req.job;
         if(status == std::cv_status::timeout) return nullptr;
     }
