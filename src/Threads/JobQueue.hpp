@@ -2,6 +2,7 @@
 
 #include <mutex>
 #include <queue>
+#include <deque>
 #include <vector>
 #include <chrono>
 #include <condition_variable>
@@ -34,7 +35,7 @@ private:
 
     std::mutex              m_mut;
     std::queue<Job*>        m_queue;
-    std::queue<Request*>    m_requests;
+    std::deque<Request*>    m_requests;
 };
 
 
