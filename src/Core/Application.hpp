@@ -22,6 +22,7 @@ public:
 private:
 
     bool initialize();
+    void initImGui();
 
     void mainLoop();
 

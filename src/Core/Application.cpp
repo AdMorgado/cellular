@@ -16,6 +16,7 @@ App::App(std::unique_ptr<Layer> layer) :
 }
 
 App::~App() {
+    ImGui::SFML::Shutdown();
     m_threadPool.shutdown();
 }
 
@@ -24,8 +25,7 @@ void App::run() {
 
     m_window.create(sf::VideoMode(960, 640), "cellular");
 
-    if(!ImGui::SFML::Init(m_window)) 
-        throw std::runtime_error("ImGui::SFML::Init() has failed");
+    initImGui(); 
 
     m_layer->start();
     
@@ -35,10 +35,15 @@ void App::run() {
 }
 
 bool App::initialize() {
-    // Avoid creating imgui.ini file
-    ImGui::GetIO().IniFilename = NULL;
-
     Resource::loadResources();
+    
+    return true;
+}
+
+void App::initImGui() {
+    if(!ImGui::SFML::Init(m_window))
+        throw std::runtime_error("ImGui::SFML::Init() has failed");
+    ImGui::GetIO().IniFilename = NULL;
 }
 
 void App::mainLoop() {
