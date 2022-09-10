@@ -11,7 +11,7 @@ TEST(JobTest, ValidUse) {
     job.join();
 }
 
-constexpr int NUM_OF_REPS = 100'000;
+constexpr int NUM_OF_REPS = 10'000;
 
 TEST(JobTest, ExhaustiveTest) {
     for(int i = 0; i < NUM_OF_REPS; i++) {
