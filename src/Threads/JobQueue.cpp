@@ -5,9 +5,9 @@ void JobQueue::enqueue(Job* job) {
     std::unique_lock<std::mutex> lock(m_mut);
     if(!m_requests.empty()) {
         Request* req = m_requests.front();
-        req->cond.notify_one();
-        req->job = job;
         m_requests.pop();
+        req->job = job;
+        req->cond.notify_one();
     } else {
         m_queue.push(job);
     }
@@ -16,7 +16,7 @@ void JobQueue::enqueue(Job* job) {
 Job* JobQueue::dequeue(std::chrono::milliseconds timeout) {
     std::unique_lock<std::mutex> lock(m_mut);
 
-    if(!m_queue.empty()) {
+    if(!m_requests.empty() && !m_queue.empty()) {
         Job* job = m_queue.front();
         m_queue.pop();
         return job;
