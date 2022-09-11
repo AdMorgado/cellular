@@ -2,6 +2,10 @@
 
 #include <iostream>
 
+Job::Job() :
+        func()
+{ /* NOTHING */ } 
+     
 Job::Job(std::function<void()> func) :
         func(func)
 { /* NOTHING */ }        

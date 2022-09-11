@@ -7,6 +7,7 @@
 class Job
 {
 public: 
+    Job();
     Job(std::function<void()> func);
 
     bool execute();
