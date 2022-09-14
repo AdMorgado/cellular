@@ -9,12 +9,12 @@ struct Particle {
     float radius            {1.f};
 };
 
-class ParticlesLayer : public Layer {
+class LangtonLayer : public Layer {
 public:
-    ParticlesLayer() {
+    LangtonLayer() {
         
     }
-    virtual ~ParticlesLayer() {
+    virtual ~LangtonLayer() {
         
     }
 
@@ -41,9 +41,12 @@ public:
 
 private:
 
+    sf::Vector2i antPosition;
+    
+
 };
 
 Layer* getLayer() {
-    return new ParticlesLayer();
+    return new LangtonLayer();
 }
 
