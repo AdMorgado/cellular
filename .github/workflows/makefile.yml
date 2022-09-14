@@ -12,6 +12,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+      with: 
+        submodules: recursive
 
     - name: Install dependencies
       run: sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test && sudo apt-get install g++-11  python3 pip libgtest-dev libsfml-dev
