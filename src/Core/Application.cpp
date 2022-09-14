@@ -5,8 +5,8 @@
 #include <string>
 #include <iostream>
 
-#include "imgui.h"
-#include "imgui-SFML.h"
+#include <imgui.h>
+#include <imgui-SFML.h>
 
 #include "Core/Resource.hpp"
 
