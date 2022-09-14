@@ -40,7 +40,7 @@ public:
     }
 
 private:
-    sf::Sprite shape;
+
 };
 
 Layer* getLayer() {
